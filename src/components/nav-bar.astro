@@ -1,0 +1,16 @@
+---
+import { Image } from 'astro:assets'
+
+import { ThemeButton } from './ui/theme-button';
+import Logo from 'public/favicon.svg'
+---
+
+<nav class="fixed top-0 right-0 left-0 w-full bg-background">
+  <div class="flex justify-between items-center max-w-5xl w-full mx-auto p-3">
+    <Image src={Logo} alt='Logo' width={50} height={50} />
+    <div class="flex gap-x-4 items-center">
+      <a class="text-lg transition-colors hover:text-neutral-500" href="/contact-me">Contact Me</a>
+      <ThemeButton client:load />
+    </div>
+  </div>
+</nav>
