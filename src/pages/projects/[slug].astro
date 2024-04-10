@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+
+import Layout from '../../layouts/Layout.astro';
+import { contentfulClient } from "../../lib/contentful";
+import type { Project } from "../../lib/contentful";
+import { Button } from '@/components/ui/button';
+import { ProjectsCarousel } from '@/components/carousel';
+
+export async function getStaticPaths() {
+  const { items } = await contentfulClient.getEntries<Project>({
+    content_type: "project",
+  });
+	const projects = items.map((item) => {
+  	const { title, shortDescription, carousselImage, slug } = item.fields;
+
+		return { 
+			title, 
+			shortDescription, 
+			carousselImage, 
+			slug 
+		};
+	});
+  const pages = items.map((item) => ({
+    params: { slug: item.fields.slug },
+    props: {
+      title: item.fields.title,
+			image: item.fields.carousselImage,
+			projects,
+    },
+  }));
+  return pages;
+}
+
+const { image, title, projects } = Astro.props;
+
+---
+
+<Layout title={"Isaac Fimbres | " + title}>
+	<main class="max-w-5xl mx-auto px-5">
+		<section class="flex flex-col justify-center items-center h-screen">
+			<Image src={image.fields.file.url} alt='Logo' width={250} height={250} transition:name="cover" />
+			<h1 class="text-3xl mt-2 font-medium">Software Development</h1>
+		</section>
+		<section class="flex flex-col mb-12 mt-40">
+			<h2 class="text-3xl font-medium text-brand mb-6 mx-auto">Projects</h2>
+			<ProjectsCarousel projects={projects} client:load />
+		</section>
+	</main>
+</Layout>
