@@ -1,17 +1,17 @@
 ---
-import { GithubIcon, LinkedinIcon } from 'lucide-react';
+import { FaGithubSquare, FaLinkedin } from 'react-icons/fa';
 ---
 
 <footer class="flex flex-col justify-center items-center mb-10 pt-28">
-  <p class="text-2xl mb-20">This portfolio was built using Sass, Tailwind, Astro and TypeScript.</p>
+  <p class="text-2xl mb-20">This portfolio was built using Tailwind, Astro and TypeScript.</p>
   <div class="w-full flex justify-between items-center px-4">
     <p>© {new Date().getFullYear()} Isaac Fimbres.</p>
-    <span class="flex space-x-4">
-      <a href="https://www.linkedin.com/in/fimbres-isaac/" target="_blank">
-        <LinkedinIcon className="text-brand hover:opacity-50 transition-opacity" />
+    <span class="flex space-x-2">
+      <a href="https://www.linkedin.com/in/fimbres-isaac/" rel="noreferrer" target="_blank" class="text-brand hover:opacity-50 transition-opacity">
+        <FaGithubSquare size={35} />
       </a>
-      <a href="https://github.com/fimbres" target="_blank">
-        <GithubIcon className="text-brand hover:opacity-50 transition-opacity" />
+      <a href="https://github.com/fimbres" rel="noreferrer" target="_blank" class="text-brand hover:opacity-50 transition-opacity">
+        <FaLinkedin size={35} />
       </a>
     </span>
   </div>
