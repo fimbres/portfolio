@@ -1,8 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-import { FaReact, FaPython, FaUser, FaGitAlt, FaNodeJs } from 'react-icons/fa';
-import { SiTypescript, SiPostgresql, SiAwsamplify, SiMongodb, SiGatsby, SiGraphql } from 'react-icons/si';
-import { TbBrandNextjs } from 'react-icons/tb';
+import { FaReact, FaPython, FaUsers, FaGitAlt, FaNodeJs } from 'react-icons/fa';
+import { SiTypescript, SiAwsamplify, SiMongodb, SiGraphql, SiAstro, SiNextdotjs } from 'react-icons/si';
+import { BiLogoPostgresql } from "react-icons/bi";
 
 import { contentfulClient } from "../lib/contentful";
 import type { Project, AssetCustom } from "../lib/contentful";
@@ -11,6 +11,7 @@ import Layout from '../layouts/Layout.astro';
 import { Button } from '@/components/ui/button';
 import { ProjectsCarousel } from '@/components/carousel';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import ResumeButton from '@/components/resume-button';
 
 import Logo from 'public/favicon.svg'
 import Profile from 'public/profile.jpeg'
@@ -36,47 +37,47 @@ const skills = [
 			text: "React Native"
 	},
 	{
-			Icon:TbBrandNextjs,
+			Icon: SiNextdotjs,
 			text: "NextJs"
 	},
 	{
-			Icon:SiGatsby,
-			text: "GatsbyJs"
+			Icon: SiAstro,
+			text: "AstroJs"
 	},
 	{
-			Icon:FaUser,
+			Icon: FaUsers,
 			text: "UX/UI Design"
 	},
 	{
-			Icon:FaPython,
+			Icon: FaPython,
 			text: "Python"
 	},
 	{
-			Icon:SiTypescript,
+			Icon: SiTypescript,
 			text: "TypeScript"
 	},
 	{
-			Icon:SiGraphql,
+			Icon: SiGraphql,
 			text: "GraphQL"
 	},
 	{
-			Icon:FaGitAlt,
+			Icon: FaGitAlt,
 			text: "Git"
 	},
 	{
-			Icon:FaNodeJs,
+			Icon: FaNodeJs,
 			text: "NodeJs"
 	},
 	{
-			Icon:SiAwsamplify,
+			Icon: SiAwsamplify,
 			text: "AWS Services"
 	},
 	{
-			Icon:SiMongodb,
+			Icon: SiMongodb,
 			text: "MongoDB"
 	},
 	{
-			Icon:SiPostgresql,
+			Icon: BiLogoPostgresql,
 			text: "PostgreSQL"
 	},
 ];
@@ -86,38 +87,38 @@ const skills = [
 	<main class="max-w-5xl mx-auto px-5">
 		<section class="flex flex-col justify-center items-center h-screen">
 			<Image src={Logo} alt='Logo' width={250} height={250} />
-			<h1 class="text-3xl mt-2 font-medium">Software Development</h1>
+			<h1 class="text-xl sm:text-3xl mt-2 font-medium">Software Development</h1>
 		</section>
-		<section class="flex md:flex-row flex-col mb-12">
-			<div class="w-full md:w-2/3 text-lg pr-6">
+		<section class="flex flex-col-reverse md:flex-row mb-12">
+			<div class="w-full md:w-2/3 text-lg md:pr-6 text-center md:text-left">
 				<h2 class="text-3xl font-medium text-brand mb-3">About Me</h2>
-				<p>I'm an enthusiastic software engineer with experience with both web and mobile development.</p>
+				<p>I'm Isaac, an enthusiastic software engineer with experience with both web and mobile development.</p>
 				<p class="my-2">I'm passionate about what I do and am always looking to learn new emerging technologies, programming languages, as well as ways to improve my day-to-day skills as a software developer.</p>
 				<p>I enjoy being involved in any aspect of a software project, from UI/UX design to database development. However, lately I've been working more on the front-end side.</p>
-				<div class="flex md:flex-row flex-col md:space-x-2 w-full mt-5">
+				<div class="flex md:flex-row flex-col gap-y-4 md:gap-x-4 w-full mt-5">
 					<Button className="w-full" variant="primary" size="lg">Contact Me</Button>
-					<Button className="w-full" variant="outline" size="lg">See My Resume</Button>
+					<ResumeButton client:load />
 				</div>
 			</div>
 			<div class="w-full md:w-1/3">
-				<Image src={Profile} alt='Profile Picture' class="rounded-full aspect-square ml-auto" width={300} height={300} />
+				<Image src={Profile} alt='Profile Picture' class="rounded-full aspect-square mx-auto md:ml-auto mb-10 md:mb-0" width={300} height={300} />
 			</div>
 		</section>
-		<section class="flex flex-col mb-12 mt-40">
+		<section class="flex flex-col mb-12 mt-72 text-center md:text-left">
 			<h2 class="text-3xl font-medium text-brand mb-6">My Skills</h2>
 			<p class="text-lg">These are some of the skills, technologies and programming languages I use the most.</p>
 			<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-7">
 				{skills.map(skill => (
-					<Card key={skill.text}>
+					<Card key={skill.text} className="bg-neutral-100 dark:bg-neutral-900 border-2 border-transparent hover:border-brand transition-all">
 						<CardContent className="flex flex-col justify-center items-center py-8 text-brand">
 							<skill.Icon size={50} />
-							<CardTitle className="mt-5">{skill.text}</CardTitle>
+							<CardTitle className="mt-5 cursor-default font-medium text-xl text-center">{skill.text}</CardTitle>
 						</CardContent>
 					</Card>
 				))}
 			</div>
 		</section>
-		<section class="flex flex-col mb-12 mt-40">
+		<section class="flex flex-col mb-20 mt-72">
 			<h2 class="text-3xl font-medium text-brand mb-6 mx-auto">Projects</h2>
 			<ProjectsCarousel projects={projects} client:load />
 		</section>
