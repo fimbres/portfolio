@@ -18,7 +18,12 @@ export const ProjectsCarousel: React.FC<ProjectsCarouselProps> = ({ projects }) 
   const mobilePhotos = ["Clean Location", "Eva Gyroscope"];
 
   return (
-    <Carousel className="w-full max-w-lg mx-auto">
+    <Carousel
+      className="w-full max-w-lg mx-auto"
+      opts={{
+        loop: true,
+      }}
+    >
       <CarouselContent>
         {projects.map((project, index) => (
           <CarouselItem key={index}>
