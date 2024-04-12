@@ -7,7 +7,9 @@ import Logo from 'public/favicon.svg'
 
 <nav id="nav-bar" class="fixed top-0 right-0 left-0 w-full bg-background z-10 transition-all">
   <div class="flex justify-between items-center max-w-5xl w-full mx-auto p-3">
-    <Image src={Logo} alt='Logo' width={50} height={50} />
+    <a href="/">
+      <Image src={Logo} alt='Logo' width={40} height={40} />
+    </a>
     <div class="flex gap-x-4 items-center">
       <a class="text-lg transition-colors hover:text-neutral-500" href="/contact-me">Contact Me</a>
       <ThemeButton client:load />
