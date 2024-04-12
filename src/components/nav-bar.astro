@@ -5,7 +5,7 @@ import { ThemeButton } from './ui/theme-button';
 import Logo from 'public/favicon.svg'
 ---
 
-<nav class="fixed top-0 right-0 left-0 w-full bg-background z-10">
+<nav id="nav-bar" class="fixed top-0 right-0 left-0 w-full bg-background z-10 transition-all">
   <div class="flex justify-between items-center max-w-5xl w-full mx-auto p-3">
     <Image src={Logo} alt='Logo' width={50} height={50} />
     <div class="flex gap-x-4 items-center">
@@ -14,3 +14,15 @@ import Logo from 'public/favicon.svg'
     </div>
   </div>
 </nav>
+
+<script is:inline>
+  const navBar = document.getElementById('nav-bar');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 0) {
+      navBar.classList.add('drop-shadow-xl');
+    } else {
+      navBar.classList.remove('drop-shadow-xl');
+    }
+  });
+</script>
