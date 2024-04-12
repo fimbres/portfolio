@@ -71,7 +71,7 @@ const mobilePhotos = ["Clean Location", "Eva Gyroscope"];
 <Layout title={"Isaac Fimbres | " + fields.title}>
 	<main class="max-w-5xl mx-auto px-5">
 		<section class="w-full max-w-2xl mx-auto flex flex-col justify-center items-center h-screen">
-			<Image src={image?.fields?.file?.url!} alt={fields.title} class={cn(mobilePhotos.includes(fields.title) ? "w-[180px] sm:w-[200px]" : "md:w-[350px]", "mx-auto")} width={300} height={300} transition:name="cover" />
+			<Image src={image?.fields?.file?.url!} alt={fields.title} class={cn(mobilePhotos.includes(fields.title) ? "w-[180px] sm:w-[200px]" : "md:w-[350px]", "mx-auto")} width={300} height={300} />
 			<h1 class="text-3xl md:text-4xl my-4 font-medium text-brand text-center">{fields.title}</h1>
 			<p class="px-6 sm:text-lg text-center">{fields.shortDescription}</p>
 		</section>
@@ -120,7 +120,7 @@ const mobilePhotos = ["Clean Location", "Eva Gyroscope"];
 		</section>
 		<section class="flex flex-col mb-20 mt-72">
 			<h2 class="text-3xl font-medium text-brand mb-6 mx-auto">Other Projects</h2>
-			<ProjectsCarousel projects={projects} client:load transition:name='cover' />
+			<ProjectsCarousel projects={projects} client:load />
 		</section>
 	</main>
 </Layout>
