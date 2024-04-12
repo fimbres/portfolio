@@ -120,7 +120,7 @@ const skills = [
 		</section>
 		<section class="flex flex-col mb-20 mt-72">
 			<h2 class="text-3xl font-medium text-brand mb-6 mx-auto">Projects</h2>
-			<ProjectsCarousel projects={projects} client:load />
+			<ProjectsCarousel projects={projects} client:load transition:name='cover' />
 		</section>
 	</main>
 </Layout>
