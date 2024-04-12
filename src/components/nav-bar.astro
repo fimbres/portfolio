@@ -1,7 +1,9 @@
 ---
 import { Image } from 'astro:assets'
 
-import { ThemeButton } from './ui/theme-button';
+import { ThemeButton } from './ui/theme-button'
+import { ContactMeButton } from './contact-me-button'
+
 import Logo from 'public/favicon.svg'
 ---
 
@@ -10,8 +12,8 @@ import Logo from 'public/favicon.svg'
     <a href="/">
       <Image src={Logo} alt='Logo' width={40} height={40} />
     </a>
-    <div class="flex gap-x-4 items-center">
-      <a class="text-lg transition-colors hover:text-neutral-500" href="/contact-me">Contact Me</a>
+    <div class="flex gap-x-1 items-center">
+      <ContactMeButton client:load />
       <ThemeButton client:load />
     </div>
   </div>

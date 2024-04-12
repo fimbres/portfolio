@@ -8,10 +8,10 @@ import { contentfulClient } from "../lib/contentful";
 import type { Project, AssetCustom } from "../lib/contentful";
 
 import Layout from '../layouts/Layout.astro';
-import { Button } from '@/components/ui/button';
 import { ProjectsCarousel } from '@/components/carousel';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import ResumeButton from '@/components/resume-button';
+import { ContactMeButton } from '@/components/contact-me-button';
 
 import Logo from 'public/favicon.svg'
 import Profile from 'public/profile.jpeg'
@@ -96,7 +96,7 @@ const skills = [
 				<p class="my-2">I'm passionate about what I do and am always looking to learn new emerging technologies, programming languages, as well as ways to improve my day-to-day skills as a software developer.</p>
 				<p>I enjoy being involved in any aspect of a software project, from UI/UX design to database development. However, lately I've been working more on the front-end side.</p>
 				<div class="flex md:flex-row flex-col gap-y-4 md:gap-x-4 w-full mt-5">
-					<Button className="w-full" variant="primary" size="lg">Contact Me</Button>
+					<ContactMeButton type='primary' client:load />
 					<ResumeButton client:load />
 				</div>
 			</div>
