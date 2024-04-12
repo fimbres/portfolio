@@ -1,4 +1,6 @@
 ---
+import { Toaster } from "@/components/ui/sonner"
+
 import ContactMeModal from '@/components/contact-me-modal';
 import Footer from '@/components/footer.astro';
 import NavBar from '@/components/nav-bar.astro';
@@ -26,6 +28,7 @@ const { title } = Astro.props;
 		<slot />
 		<Footer />
 		<ContactMeModal client:load />
+		<Toaster client:load />
 	</body>
 </html>
 
