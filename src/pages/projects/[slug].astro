@@ -11,6 +11,33 @@ import ProgressBar, { type ProgressBarProps } from '@/components/progress-bar';
 import { contentfulClient, type AssetCustom } from "@/lib/contentful";
 import type { Project } from "@/lib/contentful";
 import { cn } from '@/lib/utils';
+import type { Asset, UnresolvedLink } from 'contentful';
+
+interface ProjectProps {
+    title: string;
+    shortDescription: string;
+    carousselImage: string;
+    slug: string;
+};
+
+interface PageProps {
+	fields: {
+		slug: string;
+    title: string;
+    carousselImage: UnresolvedLink<"Asset"> | Asset<undefined, string>;
+    images: (UnresolvedLink<"Asset"> | Asset<undefined, string>)[];
+		features: {
+			feature: string,
+		}[]
+		technologies: ProgressBarProps[];
+		shortDescription: string,
+		longDescription: string,
+		codeUrl: string,
+		demoUrl: string,
+	},
+	image: Asset<undefined, string>,
+	projects: ProjectProps[],
+}
 
 export async function getStaticPaths() {
   const { items } = await contentfulClient.getEntries<Project>({
@@ -24,7 +51,7 @@ export async function getStaticPaths() {
 			shortDescription, 
 			carousselImage: (carousselImage as AssetCustom).fields.file.url,
 			slug
-		};
+		} as ProjectProps;
 	});
   const pages = items.map((item) => ({
     params: { slug: item.fields.slug },
@@ -37,14 +64,14 @@ export async function getStaticPaths() {
   return pages;
 }
 
-const { image, fields, projects } = Astro.props;
+const { image, fields, projects } = (Astro.props as unknown) as PageProps;
 const mobilePhotos = ["Clean Location", "Eva Gyroscope"];
 ---
 
 <Layout title={"Isaac Fimbres | " + fields.title}>
 	<main class="max-w-5xl mx-auto px-5">
 		<section class="w-full max-w-2xl mx-auto flex flex-col justify-center items-center h-screen">
-			<Image src={image.fields.file.url} alt={fields.title} class={cn(mobilePhotos.includes(fields.title) ? "w-[180px] sm:w-[200px]" : "md:w-[350px]", "mx-auto")} width={300} height={300} transition:name="cover" />
+			<Image src={image?.fields?.file?.url!} alt={fields.title} class={cn(mobilePhotos.includes(fields.title) ? "w-[180px] sm:w-[200px]" : "md:w-[350px]", "mx-auto")} width={300} height={300} transition:name="cover" />
 			<h1 class="text-3xl md:text-4xl my-4 font-medium text-brand text-center">{fields.title}</h1>
 			<p class="px-6 sm:text-lg text-center">{fields.shortDescription}</p>
 		</section>
@@ -68,7 +95,7 @@ const mobilePhotos = ["Clean Location", "Eva Gyroscope"];
 		<section class="w-full max-w-3xl text-center mx-auto space-y-6 mt-72">
 			<h2 class="text-3xl font-medium text-brand mb-10 mx-auto">Technologies</h2>
 			<div class="flex flex-col md:flex-row justify-center items-center gap-5">
-				{fields.technologies.map((technology: ProgressBarProps) => {
+				{fields.technologies?.map((technology: ProgressBarProps) => {
 					return (
 						<div class="flex flex-col items-center">
 							<ProgressBar percentage={technology.percentage} fromColor={technology.fromColor} toColor={technology.toColor}/>
