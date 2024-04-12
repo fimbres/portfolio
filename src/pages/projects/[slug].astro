@@ -1,11 +1,16 @@
 ---
 import { Image } from 'astro:assets';
+import { EyeIcon, StarIcon } from 'lucide-react';
+import { DiGithubBadge } from 'react-icons/di';
 
-import Layout from '../../layouts/Layout.astro';
-import { contentfulClient, type AssetCustom } from "../../lib/contentful";
-import type { Project } from "../../lib/contentful";
-import { Button } from '@/components/ui/button';
+import Layout from '@/layouts/Layout.astro';
 import { ProjectsCarousel } from '@/components/carousel';
+import LinkButton from '@/components/link-button';
+import ProgressBar, { type ProgressBarProps } from '@/components/progress-bar';
+
+import { contentfulClient, type AssetCustom } from "@/lib/contentful";
+import type { Project } from "@/lib/contentful";
+import { cn } from '@/lib/utils';
 
 export async function getStaticPaths() {
   const { items } = await contentfulClient.getEntries<Project>({
@@ -24,7 +29,7 @@ export async function getStaticPaths() {
   const pages = items.map((item) => ({
     params: { slug: item.fields.slug },
     props: {
-      title: item.fields.title,
+      fields: item.fields,
 			image: item.fields.carousselImage,
 			projects,
     },
@@ -32,19 +37,63 @@ export async function getStaticPaths() {
   return pages;
 }
 
-const { image, title, projects } = Astro.props;
-
+const { image, fields, projects } = Astro.props;
+const mobilePhotos = ["Clean Location", "Eva Gyroscope"];
 ---
 
-<Layout title={"Isaac Fimbres | " + title}>
+<Layout title={"Isaac Fimbres | " + fields.title}>
 	<main class="max-w-5xl mx-auto px-5">
-		<section class="flex flex-col justify-center items-center h-screen">
-			<Image src={image.fields.file.url} alt='Logo' width={250} height={250} transition:name="cover" />
-			<h1 class="text-3xl mt-2 font-medium">Software Development</h1>
+		<section class="w-full max-w-2xl mx-auto flex flex-col justify-center items-center h-screen">
+			<Image src={image.fields.file.url} alt={fields.title} class={cn(mobilePhotos.includes(fields.title) ? "w-[180px] sm:w-[200px]" : "md:w-[350px]", "mx-auto")} width={300} height={300} transition:name="cover" />
+			<h1 class="text-3xl md:text-4xl my-4 font-medium text-brand text-center">{fields.title}</h1>
+			<p class="px-6 sm:text-lg text-center">{fields.shortDescription}</p>
 		</section>
-		<section class="flex flex-col mb-12 mt-40">
-			<h2 class="text-3xl font-medium text-brand mb-6 mx-auto">Projects</h2>
-			<ProjectsCarousel projects={projects} client:load />
+		<section class="w-full max-w-2xl text-center mx-auto space-y-6">
+			<h2 class="text-3xl font-medium text-brand mb-6 mx-auto">What Is This Project About?</h2>
+			<p class="sm:text-lg">{fields.longDescription}</p>
+		</section>
+		<section class="w-full max-w-3xl text-center mx-auto space-y-6 mt-72">
+			<h2 class="text-3xl font-medium text-brand mb-10 mx-auto">Features</h2>
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+				{fields.features.map(({ feature } : { feature: string }) => (
+					<div class="flex flex-col justify-start items-center">
+						<span class="bg-brand/20 border-brand border-2 rounded-md p-3 mb-4">
+							<StarIcon className='text-brand' size={40} />	
+						</span>
+						<p class="md:text-lg">{feature}</p>
+					</div>
+				))}
+			</div>
+		</section>
+		<section class="w-full max-w-3xl text-center mx-auto space-y-6 mt-72">
+			<h2 class="text-3xl font-medium text-brand mb-10 mx-auto">Technologies</h2>
+			<div class="flex flex-col md:flex-row justify-center items-center gap-5">
+				{fields.technologies.map((technology: ProgressBarProps) => {
+					return (
+						<div class="flex flex-col items-center">
+							<ProgressBar percentage={technology.percentage} fromColor={technology.fromColor} toColor={technology.toColor}/>
+							<div class='mt-5 dark:text-white text-lg font-medium text-center w-52 mx-auto break-words'>{technology.technology}</div>
+						</div>
+					)
+				})}
+			</div>
+		</section>
+		<section class="w-full max-w-2xl text-center mx-auto space-y-6 text-lg mt-72">
+			<h2 class="text-3xl font-medium text-brand mb-6 mx-auto">Want To See More About This Project?</h2>
+			<div class="flex md:flex-row flex-col gap-y-4 md:gap-x-4 w-full mt-5">
+				<LinkButton client:load type='code' url={fields.codeUrl}>
+					<DiGithubBadge className='mr-2' size={20} />
+					See The Code
+				</LinkButton>
+				<LinkButton client:load type='demo' url={fields.demoUrl}>
+					<EyeIcon className='mr-2' size={20} />
+					See The Demo
+				</LinkButton>
+			</div>
+		</section>
+		<section class="flex flex-col mb-20 mt-72">
+			<h2 class="text-3xl font-medium text-brand mb-6 mx-auto">Other Projects</h2>
+			<ProjectsCarousel projects={projects} client:load transition:name='cover' />
 		</section>
 	</main>
 </Layout>
