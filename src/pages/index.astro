@@ -1,13 +1,13 @@
 ---
 import { Image } from 'astro:assets';
-import { FaReact, FaPython, FaUsers, FaGitAlt, FaNodeJs } from 'react-icons/fa';
-import { SiTypescript, SiAwsamplify, SiMongodb, SiGraphql, SiAstro, SiNextdotjs } from 'react-icons/si';
-import { BiLogoPostgresql } from "react-icons/bi";
-
+import { FaReact, FaUsers, FaGitAlt, FaNodeJs, FaAws } from 'react-icons/fa';
+import { SiTypescript, SiMongodb, SiGraphql, SiAstro, SiNextdotjs } from 'react-icons/si';
+import { BiLogoPostgresql, BiLogoSpringBoot } from "react-icons/bi";
 import { contentfulClient } from "../lib/contentful";
 import type { Project, AssetCustom } from "../lib/contentful";
 
 import Layout from '../layouts/Layout.astro';
+
 import { ProjectsCarousel } from '@/components/carousel';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import ResumeButton from '@/components/resume-button';
@@ -21,14 +21,15 @@ const entries = await contentfulClient.getEntries<Project>({
 });
 
 const projects = entries.items.map((item) => {
-  const { title, shortDescription, carousselImage, slug } = item.fields;
+  const { title, shortDescription, carousselImage, slug, device } = item.fields;
 
   return { 
 		title, 
 		shortDescription, 
 		carousselImage: (carousselImage as AssetCustom).fields.file.url, 
-		slug }
-	;
+		slug,
+		device,
+	};
 });
 
 const skills = [
@@ -49,8 +50,8 @@ const skills = [
 			text: "UX/UI Design"
 	},
 	{
-			Icon: FaPython,
-			text: "Python"
+			Icon: BiLogoSpringBoot,
+			text: "Spring Boot"
 	},
 	{
 			Icon: SiTypescript,
@@ -69,8 +70,8 @@ const skills = [
 			text: "NodeJs"
 	},
 	{
-			Icon: SiAwsamplify,
-			text: "AWS Services"
+			Icon: FaAws,
+			text: "AWS Cloud"
 	},
 	{
 			Icon: SiMongodb,
@@ -92,9 +93,9 @@ const skills = [
 		<section class="flex flex-col-reverse md:flex-row mb-12">
 			<div class="w-full md:w-2/3 text-lg md:pr-6 text-center md:text-left">
 				<h2 class="text-3xl font-medium text-brand mb-3">About Me</h2>
-				<p>I'm Isaac, an enthusiastic software engineer with experience with both web and mobile development.</p>
-				<p class="my-2">I'm passionate about what I do and am always looking to learn new emerging technologies, programming languages, as well as ways to improve my day-to-day skills as a software developer.</p>
-				<p>I enjoy being involved in any aspect of a software project, from UI/UX design to database development. However, lately I've been working more on the front-end side.</p>
+				<p>Dynamic Full-Stack Software Engineer with 5+ years of expertise in JavaScript (ES6+), TypeScript, React.js, Next.js, React Native, Node.js, Java and REST/GraphQL API development.</p>
+				<p class="my-2">Proven track record architecting and deploying cloud-native microservices and serverless functions using AWS Lambda, EC2, S3, Docker and CI/CD pipelines.</p>
+				<p>Skilled in Spring Boot optimizations, performance tuning, automated testing (Jest, Cypress) and agile delivery to accelerate time-to-market and ensure robust, maintainable codebases.</p>
 				<div class="flex md:flex-row flex-col gap-y-4 md:gap-x-4 w-full mt-5">
 					<ContactMeButton type='primary' client:load />
 					<ResumeButton client:load />
