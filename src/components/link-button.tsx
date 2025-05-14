@@ -11,7 +11,7 @@ interface LinkButtonProps {
 
 const LinkButton: React.FC<LinkButtonProps> = ({ type, url, children }) => {
   return (
-    <Button variant={type === "code" ? "default" : "secondary"} className={cn(!url && "pointer-events-none cursor-not-allowed",'w-full')} size="lg" disabled={!!url} asChild={!!url}>
+    <Button variant={type === "code" ? "default" : "secondary"} className={cn(!url && "cursor-not-allowed",'w-full')} size="lg" disabled={!!url} asChild={!!url}>
       {!!url ? (
         <a href={url} target='_blank' rel="noreferrer">
           {children}
