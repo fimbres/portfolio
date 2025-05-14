@@ -1,5 +1,7 @@
 import { type ClassValue, clsx } from "clsx"
+import type { Entry } from "contentful";
 import { twMerge } from "tailwind-merge"
+import type { Project } from "./contentful";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -18,4 +20,11 @@ export function calculateYearsExperience(): number {
   }
 
   return years;
+}
+
+export const sortWebProjects = (a: Entry<Project, undefined, string>, b: Entry<Project, undefined, string>) => {
+  if (a.fields.device === 'web' && b.fields.device !== 'web') return -1;
+  if (b.fields.device === 'web' && a.fields.device !== 'web') return 1;
+
+  return 0;
 }
