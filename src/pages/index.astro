@@ -3,8 +3,10 @@ import { Image } from 'astro:assets';
 import { FaReact, FaUsers, FaGitAlt, FaNodeJs, FaAws } from 'react-icons/fa';
 import { SiTypescript, SiMongodb, SiGraphql, SiAstro, SiNextdotjs } from 'react-icons/si';
 import { BiLogoPostgresql, BiLogoSpringBoot } from "react-icons/bi";
+
 import { contentfulClient } from "../lib/contentful";
 import type { Project, AssetCustom } from "../lib/contentful";
+import { calculateYearsExperience, sortWebProjects } from '../lib/utils';
 
 import Layout from '../layouts/Layout.astro';
 
@@ -20,7 +22,7 @@ const entries = await contentfulClient.getEntries<Project>({
   content_type: "project",
 });
 
-const projects = entries.items.map((item) => {
+const projects = entries.items.sort(sortWebProjects).map((item) => {
   const { title, shortDescription, carousselImage, slug, device } = item.fields;
 
   return { 
@@ -93,7 +95,7 @@ const skills = [
 		<section class="flex flex-col-reverse md:flex-row mb-12">
 			<div class="w-full md:w-2/3 text-lg md:pr-6 text-center md:text-left">
 				<h2 class="text-3xl font-medium text-brand mb-3">About Me</h2>
-				<p>Dynamic Full-Stack Software Engineer with 5+ years of expertise in JavaScript (ES6+), TypeScript, React.js, Next.js, React Native, Node.js, Java and REST/GraphQL API development.</p>
+				<p>Dynamic Full-Stack Software Engineer with {calculateYearsExperience()}+ years of expertise in JavaScript (ES6+), TypeScript, React.js, Next.js, React Native, Node.js, Java and REST/GraphQL API development.</p>
 				<p class="my-2">Proven track record architecting and deploying cloud-native microservices and serverless functions using AWS Lambda, EC2, S3, Docker and CI/CD pipelines.</p>
 				<p>Skilled in Spring Boot optimizations, performance tuning, automated testing (Jest, Cypress) and agile delivery to accelerate time-to-market and ensure robust, maintainable codebases.</p>
 				<div class="flex md:flex-row flex-col gap-y-4 md:gap-x-4 w-full mt-5">
