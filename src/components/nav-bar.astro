@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets'
 
-import { ThemeButton } from './ui/theme-button'
 import { ContactMeButton } from './contact-me-button'
 
 import Logo from 'public/favicon.svg'
@@ -14,7 +13,6 @@ import Logo from 'public/favicon.svg'
     </a>
     <div class="flex gap-x-1 items-center">
       <ContactMeButton client:load />
-      <ThemeButton client:load />
     </div>
   </div>
 </nav>
