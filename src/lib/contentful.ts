@@ -1,6 +1,6 @@
-import contentful, { type Asset, type EntryFieldTypes, type UnresolvedLink } from "contentful";
+import { createClient, type Asset, type EntryFieldTypes, type UnresolvedLink } from "contentful";
 
-export const contentfulClient = contentful.createClient({
+export const contentfulClient = createClient({
   space: import.meta.env.CONTENTFUL_SPACE_ID,
   accessToken: import.meta.env.DEV
     ? import.meta.env.CONTENTFUL_PREVIEW_TOKEN
@@ -11,8 +11,8 @@ export const contentfulClient = contentful.createClient({
 export interface Project {
   contentTypeId: "project",
   fields: {
-    slug: EntryFieldTypes.Text
-    title: EntryFieldTypes.Text
+    slug: EntryFieldTypes.Text,
+    title: EntryFieldTypes.Text,
     carousselImage: EntryFieldTypes.AssetLink,
     images: EntryFieldTypes.Array<EntryFieldTypes.AssetLink>,
     shortDescription: EntryFieldTypes.Text,
@@ -21,6 +21,7 @@ export interface Project {
     features: EntryFieldTypes.Object,
     codeUrl: EntryFieldTypes.Text,
     demoUrl: EntryFieldTypes.Text,
+    device: EntryFieldTypes.Text,
   }
 }
 
@@ -29,6 +30,7 @@ export interface ProjectSlide {
   shortDescription: string;
   carousselImage: string;
   slug: string;
+  device: string;
 }[];
 
 export interface AssetCustom {
